@@ -1,0 +1,106 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <algorithm>
+#include <list>
+
+using namespace std;
+
+int* function1 (int* list1 , int* list2)
+{
+    int* new_list = new int[sizeof(list1) + sizeof(list2)];
+    int counter = 0;
+    for (int i=0;i<sizeof(list1);i++)
+    {
+        for (int j=0;j<sizeof(list2);j++)
+        {
+            if (list1[i] == list2[j])
+            {
+                new_list[counter] = list1[i];
+                counter++;
+            }
+        }
+    }
+    return new_list;
+}
+string* function2(string* list){
+    bool isSame = true;
+    int counter = 0;
+    string* list2 = new string[sizeof(list)];
+    for(int y = 0; y < sizeof(list); y++ ){
+        for(int i = 0; i < sizeof(list[y]);i++){
+                if(list[y][i] != list[y][sizeof(list[y])-i-1])
+                    isSame = false;
+        }
+        if(isSame){
+            list2[counter] = list[y];
+            counter++;
+        }
+    }
+    return list2;
+}
+
+int* eratosthenes(int* list, int size) {
+    int* primes = new int[size];
+    int* multiples = new int[size * size];
+    int primesCount = 0;
+
+    std::sort(list, list + size);
+    int max = list[size - 1];
+
+    for (int i = 2; i <= max; ++i) {
+        bool isPrime = true;
+        for (int j = 0; j < primesCount && primes[j] <= std::sqrt(i); ++j) {
+            if (i % primes[j] == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime) {
+            primes[primesCount++] = i;
+            for (int j = i * i; j <= max; j += i) {
+                multiples[j] = 1;
+            }
+        }
+    }
+
+    int* result = new int[primesCount];
+    std::copy(primes, primes + primesCount, result);
+
+    delete[] primes;
+    delete[] multiples;
+
+    return result;
+}
+
+std::list<std::string> anagram(std::string word, std::list<std::string> word_list) {
+    std::list<std::string> new_list;
+    for (const std::string& x : word_list) {
+        bool isIn = false;
+        for (char y : word) {
+            if (x.find(y) == std::string::npos) {
+                isIn = false;
+                break;
+            } else {
+                isIn = true;
+            }
+        }
+        if (isIn) {
+            new_list.push_back(x);
+        }
+    }
+    return new_list;
+}
+
+
+int main()
+{
+    std::list<std::string> word_list = {"listen", "silent", "hello", "world", "dog", "god"};
+    std::string word = "enlist";
+    std::list<std::string> result = anagram(word, word_list);
+    for (const auto& word : result) {
+        std::cout << word << " ";
+    }
+    std::cout << std::endl;
+    return 0;
+}
