@@ -1,0 +1,37 @@
+def func(list1, list2):
+    total_list = {value for value in list1 if value in list2}
+    return total_list
+
+def func2(list_str):
+    new_list = {}
+    for x in list_str:
+        if (x == x[::-1]):
+            new_list.append(x)
+    return new_list
+
+def eratosthenes(list):
+    multiples = []
+    primes = []
+    list = sorted(list)
+    max = list[len(list)-1]
+
+    for i in range(2, max+1):
+        if i not in multiples:
+            primes.append(i)
+            for j in range(i*i, max+1, i):
+                multiples.append(j)
+    return primes
+
+def anagram(word, word_list):
+    new_list = []
+    for x in word_list:
+        isin = False
+        for y in word:
+            if not y in x:
+                isin = False
+                break
+            else:
+                isin = True
+        if isin:
+            new_list.append(x)
+    return new_list
